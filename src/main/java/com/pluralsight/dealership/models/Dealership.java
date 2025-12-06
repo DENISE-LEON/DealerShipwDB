@@ -10,7 +10,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phoneNum;
-    private List<Vehicle> inventory;
+  //  private List<Vehicle> inventory;
 
 
     public Dealership(int dealershipID, String name, String address, String phoneNum) {
@@ -18,7 +18,7 @@ public class Dealership {
         this.name = name;
         this.address = address;
         this.phoneNum = phoneNum;
-        this.inventory = new ArrayList<>();
+       // this.inventory = new ArrayList<>();
     }
 
 
@@ -54,13 +54,13 @@ public class Dealership {
         this.phoneNum = phoneNum;
     }
 
-    public List<Vehicle> getInventory() {
-        return inventory;
-    }
+//    public List<Vehicle> getInventory() {
+//        return inventory;
+//    }
 
-    public void setInventory(List<Vehicle> inventory) {
-        this.inventory = inventory;
-    }
+//    public void setInventory(List<Vehicle> inventory) {
+//        this.inventory = inventory;
+//    }
 
     //pretty formatting
     @Override
