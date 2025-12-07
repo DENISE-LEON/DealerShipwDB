@@ -1,7 +1,6 @@
 package com.pluralsight.dealership.managers;
 
 import com.pluralsight.dealership.models.Dealership;
-import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -66,7 +65,7 @@ public class DealershipManager {
 
             try (
                     //get the keys which are later used to create the dealership(ID field)
-                    ResultSet keys = preparedStatement.getGeneratedKeys();
+                    ResultSet keys = preparedStatement.getGeneratedKeys()
             ) {
                 if (keys.next()) {
                     //the column that contains the key
@@ -87,6 +86,58 @@ public class DealershipManager {
     }
 
 
+    public boolean removeDealership(String vinNum){
+        try(
+                Connection connection = dataSource.getConnection();
+
+                PreparedStatement preparedStatement = connection.prepareStatement("""
+                        DELETE
+                        FROM Dealerships
+                        WHERE DealershipID = ?;
+                        """)
+        ) {
+
+            preparedStatement.setString(1, vinNum);
+            int rows = preparedStatement.executeUpdate();
+
+
+            if (rows == 0) {
+                System.out.println("No rows inserted, shipper not added.");
+                return false;
+            }
+            return true;
+
+        }catch (SQLException e) {
+            System.out.println(e.getErrorCode() + " " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void updateField(int dealershipID, DealershipField fieldNane, String newVal){
+        try(
+                Connection connection = dataSource.getConnection();
+
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Dealerships SET " + fieldNane.getColumnName() + "= ? WHERE DealershipID = ?;")
+                ) {
+
+            preparedStatement.setString(1,newVal);
+            preparedStatement.setInt(2, dealershipID);
+
+            int rows = preparedStatement.executeUpdate();
+
+            if (rows == 0) {
+                System.out.println("No rows updated — check if the ShipperID exists.");
+            } else {
+                System.out.println("Shipper updated successfully!");
+                System.out.println();
+            }
+
+        }catch (SQLException e) {
+            System.out.println(e.getErrorCode() + " " + e.getMessage());
+        }
+    }
+
+
     public void addDealershipToList(ResultSet resultSet, List<Dealership> list) throws SQLException {
 
         while (resultSet.next()) {
@@ -99,32 +150,8 @@ public class DealershipManager {
         }
     }
 
-    public boolean removeDealership(String vinNum){
-        try(
-                Connection connection = dataSource.getConnection();
-
-                PreparedStatement preparedStatement = connection.prepareStatement("""
-                        DELETE
-                        FROM Dealerships
-                        WHERE DealershipID = ?;
-                        """)
-                ) {
-
-            preparedStatement.setString(1, vinNum);
-            int rows = preparedStatement.executeUpdate();
 
 
-            if (rows == 0) {
-                System.out.println("No rows inserted, shipper not added.");
-                return false;
-        }
-            return true;
-
-}catch (SQLException e) {
-            System.out.println(e.getErrorCode() + " " + e.getMessage());
-            return false;
-        }
-    }
 
 
 }
