@@ -86,7 +86,7 @@ public class DealershipManager {
     }
 
 
-    public boolean removeDealership(String vinNum){
+    public boolean removeDealership(int dealershipID){
         try(
                 Connection connection = dataSource.getConnection();
 
@@ -97,7 +97,7 @@ public class DealershipManager {
                         """)
         ) {
 
-            preparedStatement.setString(1, vinNum);
+            preparedStatement.setInt(1, dealershipID);
             int rows = preparedStatement.executeUpdate();
 
 

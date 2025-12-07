@@ -20,47 +20,51 @@ public class DealershipUI extends BaseUserInterface {
     }
 
     public void menuDisplay() {
-        try {
-            boolean run = true;
-            while (run) {
-                System.out.println();
-                System.out.println("""
-                        What would you like to do?
-                        1) View all Dealerships
-                        2) Add dealership
-                        3) Remove Dealership
-                        4) Update Dealership
-                        0) Return to main menu
-                        """);
-                int menuChoice = scanner.nextInt();
-                scanner.nextLine();
 
-                switch (menuChoice) {
-                    case 1:
-                        viewAllDealershipsProcess();
-                        break;
-                    case 2:
-                        addDealershipProcess();
-                        break;
-                    case 3:
-                        removeDealershipProcess();
-                        break;
-                    case 4:
-                        updateDealershipProcess();
-                        break;
-                    case 0:
-                        nowDoingMgs("returning to main menu");
-                        run = false;
-                        break;
-                }
+        boolean run = true;
+        while (run) {
+            System.out.println();
+            System.out.println("""
+                    What would you like to do?
+                    1) View all Dealerships
+                    2) Add dealership
+                    3) Remove Dealership
+                    4) Update Dealership
+                    0) Return to main menu
+                    """);
+            int menuChoice;
+            try {
+                menuChoice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Please input a number");
+                System.out.println("Example:");
+                System.out.println("I want to: view all dealerships");
+                System.out.println("Your input: 1");
+                scanner.nextLine();
+                continue;
             }
-        }catch (Exception e) {
-            System.out.println("Please input a number");
-            System.out.println("Example:");
-            System.out.println("I want to: view all dealerships");
-            System.out.println("Your input: 1");
-            scanner.nextLine();
+
+            switch (menuChoice) {
+                case 1:
+                    viewAllDealershipsProcess();
+                    break;
+                case 2:
+                    addDealershipProcess();
+                    break;
+                case 3:
+                    removeDealershipProcess();
+                    break;
+                case 4:
+                    updateDealershipProcess();
+                    break;
+                case 0:
+                    nowDoingMgs("returning to main menu");
+                    run = false;
+                    break;
+            }
         }
+
     }
 
     public void viewAllDealershipsProcess() {
@@ -92,31 +96,22 @@ public class DealershipUI extends BaseUserInterface {
     }
 
     public void removeDealershipProcess() {
-        try {
-            System.out.println("Tip: if you don't know the ID on the dealership go back to main menu and select option 1 to view all dealerships");
-            System.out.println("Enter the Dealership ID of the dealership you wish to remove");
-            String dealershipID = scanner.nextLine();
+        System.out.println("Tip: if you don't know the ID on the dealership go back to main menu and select option 1 to view all dealerships");
+        System.out.println("Enter the Dealership ID of the dealership you wish to remove");
+        int dealershipID = scanner.nextInt();
+        System.out.println("Are you sure you want to remove this dealership?(Y/N)");
+        String confirmRemove = scanner.nextLine();
 
-            System.out.println("Are you sure you want to remove this dealership?(Y/N)");
-            String confirmRemove = scanner.nextLine();
+        boolean removed;
+        if (confirmRemove.equalsIgnoreCase("Y")) {
 
-            boolean removed;
-            if (confirmRemove.equalsIgnoreCase("Y")) {
+            nowDoingMgs("removing dealership");
 
-                nowDoingMgs("removing dealership");
+            removed = dealershipManager.removeDealership(dealershipID);
 
-                removed = dealershipManager.removeDealership(dealershipID);
-
-                System.out.printf(removed ? "Car has been successfully removed. Bye bye vroom vroom" : "Vehicle with %s VIN number not found", dealershipID);
-            } else {
-                System.out.println("Removal cancelled");
-            }
-        }catch (Exception e){
-            System.out.println("Please input a number");
-            System.out.println("Example:");
-            System.out.println("I want to: remove dealership with ID #3");
-            System.out.println("Your input: 3");
-            scanner.nextLine();
+            System.out.printf(removed ? "Car has been successfully removed. Bye bye vroom vroom" : "Vehicle with %s VIN number not found", dealershipID);
+        } else {
+            System.out.println("Removal cancelled");
         }
     }
 
