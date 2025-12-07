@@ -22,6 +22,7 @@ public class MainMenuUI extends BaseUserInterface{
     public void MenuDisplay(){
         boolean run = true;
         while (run) {
+            System.out.println();
             System.out.println("Hello");
             System.out.println("""
                     What would you like to do?
@@ -37,8 +38,15 @@ public class MainMenuUI extends BaseUserInterface{
                     break;
                 case 2:
                     vehicleUI.menuDisplay();
+                    break;
                 case 3:
                     salesContractsUI.menuDisplay();
+                    break;
+                case 0:
+                    nowDoingMgs("exiting");
+                    System.out.println("\nGoodbye!");
+                    run = false;
+                    break;
             }
         }
     }

@@ -10,15 +10,16 @@ public class Dealership {
     private String name;
     private String address;
     private String phoneNum;
-  //  private List<Vehicle> inventory;
+
+    //  private List<Vehicle> inventory;
 
 
-    public Dealership(int dealershipID, String name, String address, String phoneNum) {
+    public Dealership(int dealershipID, String name, String phoneNum, String address) {
         DealershipID = dealershipID;
         this.name = name;
-        this.address = address;
         this.phoneNum = phoneNum;
-       // this.inventory = new ArrayList<>();
+        this.address = address;
+        // this.inventory = new ArrayList<>();
     }
 
 
