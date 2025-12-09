@@ -116,84 +116,69 @@ public class DealershipUI extends BaseUserInterface {
     }
 
     public void updateDealershipProcess() {
-        try {
-            System.out.println("Tip: if you don't know the ID on the dealership go back to main menu and select option 1 to view all dealerships");
-            System.out.println("Which field would you like to update?");
-            System.out.println("""
-                    1) Dealership name
-                    2) Dealership address
-                    3) Dealership Phone number
-                    0) Return to main menu
-                    """);
-            int fieldChoice = scanner.nextInt();
-            scanner.nextLine();
 
-            DealershipField field = null;
-            switch (fieldChoice) {
-                case 1:
-                    field = DealershipField.NAME;
-                    break;
-                case 2:
-                    field = DealershipField.ADDRESS;
-                    break;
-                case 3:
-                    field = DealershipField.PHONE;
-                    break;
-                case 0:
-                    System.out.print("Returning to main menu");
-                    loadingDots();
-                    System.out.println();
-                    return;
-            }
-            try {
-                System.out.println("Please enter the ID of the shipper you'd like to update");
-                int shipperID = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("What would you like to update the field to?");
-                String newVal = scanner.nextLine();
-                nowDoingMgs("Updating");
-                dealershipManager.updateField(shipperID, field, newVal);
+        System.out.println("Tip: if you don't know the ID on the dealership go back to main menu and select option 1 to view all dealerships");
+        System.out.println("Which field would you like to update?");
+        System.out.println("""
+                1) Dealership name
+                2) Dealership address
+                3) Dealership Phone number
+                0) Return to main menu
+                """);
+        int fieldChoice = scanner.nextInt();
+        scanner.nextLine();
 
-            } catch (Exception e) {
-                System.out.println("Please input a number");
-                System.out.println("Example:");
-                System.out.println("I want to: update with ID #3");
-                System.out.println("Your input: 3");
-                scanner.nextLine();
-            }
-
-        } catch (Exception e) {
-            System.out.println("Please input a number");
-            System.out.println("Example:");
-            System.out.println("I want to: update dealership name");
-            System.out.println("Your input: 1");
-            scanner.nextLine();
+        DealershipField field = null;
+        switch (fieldChoice) {
+            case 1:
+                field = DealershipField.NAME;
+                break;
+            case 2:
+                field = DealershipField.ADDRESS;
+                break;
+            case 3:
+                field = DealershipField.PHONE;
+                break;
+            case 0:
+                System.out.print("Returning to main menu");
+                loadingDots();
+                System.out.println();
+                return;
         }
+
+        System.out.println("Please enter the ID of the shipper you'd like to update");
+        int shipperID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("What would you like to update the field to?");
+        String newVal = scanner.nextLine();
+        nowDoingMgs("Updating");
+        dealershipManager.updateField(shipperID, field, newVal);
+
     }
 
-    public void printResults(List<Dealership> dealerships) {
-        if (dealerships.isEmpty()) {
-            System.out.println("No dealerships found");
-            System.out.println();
-            return;
-        }
-        System.out.printf("%-10s %-30s %-20s %-40s%n",
-                "ID", "Name", "Phone Number", "Address");
-
-        // Divider
-        System.out.println("-----------------------------------------------------------------------------------------------");
-
-        // Rows
-        for (Dealership d : dealerships) {
-            System.out.printf("%-10d %-30s %-20s %-40s%n",
-                    d.getDealershipID(),
-                    d.getName(),
-                    d.getPhoneNum(),
-                    d.getAddress());
-        }
-
+public void printResults(List<Dealership> dealerships) {
+    if (dealerships.isEmpty()) {
+        System.out.println("No dealerships found");
         System.out.println();
+        return;
     }
+    System.out.printf("%-10s %-30s %-20s %-40s%n",
+            "ID", "Name", "Phone Number", "Address");
+
+    // Divider
+    System.out.println("-----------------------------------------------------------------------------------------------");
+
+    // Rows
+    for (Dealership d : dealerships) {
+        System.out.printf("%-10d %-30s %-20s %-40s%n",
+                d.getDealershipID(),
+                d.getName(),
+                d.getPhoneNum(),
+                d.getAddress());
+    }
+
+    System.out.println();
+}
 }
 
 

@@ -42,13 +42,14 @@ public class VehicleUI extends BaseUserInterface {
                     0) Quit
                     
                     """);
-            int menuChoice = 0;
+            int menuChoice;
             try {
-                menuChoice = Math.abs(scanner.nextInt());
+                 menuChoice = Math.abs(scanner.nextInt());
                 scanner.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a number from the choices provided!");
                 scanner.nextLine();
+                continue;
             }
 
             switch (menuChoice) {
